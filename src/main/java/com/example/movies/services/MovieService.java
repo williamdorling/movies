@@ -30,14 +30,13 @@ public class MovieService {
     }
 
     public List<Movie> getAllMovies(Integer maxDuration) {
-        List<Movie> originalList =  movieRepository.findAll();
-        List<Movie> newList = movieRepository.findAll();
-
-        for (Movie movie : originalList){
-            if (movie.getDuration() > maxDuration){
-                newList.remove(movie);
+        List<Movie> movieList =  movieRepository.findAll();
+        for (Movie movie : movieList) {
+            if (movie.getDuration() > maxDuration) {
+                movieList.remove(movie);
             }
-        }return newList;
+        }
+        return movieList;
     }
 
     public Optional<Movie> getMovieById(int id){
