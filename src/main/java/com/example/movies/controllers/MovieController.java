@@ -34,9 +34,15 @@ public class MovieController {
 //    }
 
     @GetMapping
-    public ResponseEntity<List<Movie>> getAllMoviesByDuration(@RequestParam int maxDuration){
-        List<Movie> movies = movieService.getAllMovies(maxDuration);
+    public ResponseEntity<List<Movie>> getAllMoviesByDuration(@RequestParam(required = false) Integer maxDuration){
+        List<Movie> movies;
+        if (maxDuration == null){
+            movies = movieService.getAllMovies();
+        }else {
+            movies = movieService.getAllMovies(maxDuration);
+        }
         return new ResponseEntity<>(movies, HttpStatus.OK);
+
     }
 
     @GetMapping(value = "/{id}")
