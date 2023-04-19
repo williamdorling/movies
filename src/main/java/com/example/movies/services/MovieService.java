@@ -7,6 +7,7 @@ import com.example.movies.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,13 +31,14 @@ public class MovieService {
     }
 
     public List<Movie> getAllMovies(Integer maxDuration) {
-        List<Movie> movieList =  movieRepository.findAll();
-        for (Movie movie : movieList) {
+        List<Movie> allMovies =  movieRepository.findAll();
+        List<Movie> filteredMovies = new ArrayList<>();
+        for (Movie movie : allMovies) {
             if (movie.getDuration() > maxDuration) {
-                movieList.remove(movie);
+                filteredMovies.add(movie);
             }
         }
-        return movieList;
+        return filteredMovies;
     }
 
     public Optional<Movie> getMovieById(int id){
@@ -46,6 +48,11 @@ public class MovieService {
     public Reply deleteMovieById(int id){
         movieRepository.deleteById(id);
         return new Reply("movie deleted");
+    }
+
+    public Reply updateMovie(Movie movie){
+        movieRepository.save(movie);
+        return new Reply("movie " + movie.getId() + " updated");
     }
 
 

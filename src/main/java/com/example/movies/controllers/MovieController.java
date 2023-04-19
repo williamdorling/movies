@@ -20,9 +20,15 @@ public class MovieController {
     @Autowired
     MovieService movieService;
 
+//    @PostMapping
+//    public ResponseEntity<Reply> newMovie(@RequestParam  String title, @RequestParam String rating, @RequestParam int duration){
+//        Movie movie = new Movie(title,rating,duration);
+//        Reply reply = movieService.addNewMovie(movie);
+//        return new ResponseEntity<>(reply, HttpStatus.CREATED);
+//    }
+
     @PostMapping
-    public ResponseEntity<Reply> newMovie(@RequestParam  String title, @RequestParam String rating, @RequestParam int duration){
-        Movie movie = new Movie(title,rating,duration);
+    public ResponseEntity<Reply> addNewMovie(@RequestBody Movie movie){
         Reply reply = movieService.addNewMovie(movie);
         return new ResponseEntity<>(reply, HttpStatus.CREATED);
     }
@@ -42,7 +48,6 @@ public class MovieController {
             movies = movieService.getAllMovies(maxDuration);
         }
         return new ResponseEntity<>(movies, HttpStatus.OK);
-
     }
 
     @GetMapping(value = "/{id}")
@@ -65,6 +70,12 @@ public class MovieController {
     public ResponseEntity<Reply> updateMovieById(@PathVariable int id, @RequestParam  String title, @RequestParam String rating, @RequestParam int duration){
         Reply reply = movieService.updateMovieById(id, title, rating, duration);
         return new ResponseEntity<>(reply, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Reply> updateMovieById(@RequestBody Movie movie){
+        Reply reply = movieService.updateMovie(movie);
+        return new ResponseEntity<>(reply, HttpStatus.CREATED);
     }
 
 
